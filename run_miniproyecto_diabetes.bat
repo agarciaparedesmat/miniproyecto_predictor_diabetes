@@ -1,52 +1,76 @@
 @echo off
-title Miniproyecto Diabetes - Entrenamiento y Dashboard
-color 0B
+title 🩺 Miniproyecto Predictor_Diabetes - Instalación, Entrenamiento y Dashboard
+color 0A
+
 
 echo ============================================
 echo   Como ejeturar este .bat
 echo ============================================
-echo run_miniproyecto_diabetes.bat
+echo Opción 1: Desde el explorador de Windows, 
+echo navega a la carpeta raiz del proyecto miniproyecto_predictor_diabetesdel 
+echo y haz doble clic en:  run_miniproyecto_diabetes.bat
 echo
+echo Opción 2: Abre **VS Code**. 2. Abre la terminal integrada (**Ctrl + ñ**). 
+echo 3. Ejecuta el comando: .\run_miniproyecto_diabetes.bat
+
 
 echo ============================================
 echo  🩺 Configuración del entorno Python 3.11
 echo ============================================
 
-REM 0. Cambiar la política de ejecución global (LocalMachine) 
-REM porque no estás ejecutando PowerShell como administrador
+REM === 1. Comprobar si existe el entorno virtual y crearlo si no existe ===
+IF NOT EXIST "venv" (
+    echo [INFO] No se detecta entorno virtual. Creando venv (entorno virtual) para la versión Python 3.11......
+    py -3.11 -m venv venv
+    IF %ERRORLEVEL% NEQ 0 (
+        echo [ERROR] No se pudo crear el entorno virtual. Asegúrate de tener Python 3.11 instalado.
+        echo Comprobando versión de Python
+        python --version        
+        pause
+        exit /b 1
+    )
+) ELSE (
+    echo [OK] Entorno virtual detectado.
+)
+echo.
+
+REM === 2. Cambiar la política de ejecución global (LocalMachine) 
+REM por si no estás ejecutando PowerShell como administrador
 echo Cambiar la política solo para tu usuario (RECOMENDADO)
 echo No necesitas abrir PowerShell como administrador. 
-echo Simplemente en VS Code o PowerShell normal ejecuta:
 Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 
-
-REM 1. Comprobar versión de Python
-python --version
-
-REM 2. Crear entorno virtual con Python 3.11
-echo.
-echo Creando entorno virtual para la versión Python 3.11...
-py -3.11 -m venv venv
-
-REM 3. Activar entorno virtual
-echo.
-echo Activando entorno virtual...
+REM === 3. Activar entorno virtual ===
+echo [INFO] Activando entorno virtual...
 call venv\Scripts\activate
 
-REM 4. Actualizar pip, setuptools y wheel
-echo.
-echo Actualizando pip, setuptools y wheel...
-python -m pip install --upgrade pip setuptools wheel
+IF %ERRORLEVEL% NEQ 0 (
+    echo [ERROR] No se pudo activar el entorno virtual.
+    pause
+    exit /b 1
+)
 
-REM 5. Instalar dependencias estables
-echo.
-echo Instalando librerías necesarias...
-pip install -r requirements_py311.txt
+REM === 4. Instalar dependencias ===
+IF EXIST "requirements_py311.txt" (
+    echo [INFO] Instalando dependencias desde requirements_py311.txt...
+    
+    echo Actualizando pip, setuptools y wheel...
+    python -m pip install --upgrade pip setuptools wheel
 
-REM 6. Mostrar librerías instaladas
-echo.
-echo Dependencias instaladas correctamente:
-pip list
+    pip install -r requirements_py311.txt
+    IF %ERRORLEVEL% NEQ 0 (
+        echo [ERROR] Error instalando dependencias.
+        pause
+        exit /b 1
+    )
+    echo Dependencias instaladas correctamente ...
+    echo Listado de librerías instaladas:
+    pip list
+) ELSE (
+    echo [ERROR] No se encuentra el archivo requirements_py311.txt
+    pause
+    exit /b 1
+)
 
 echo.
 echo ============================================
@@ -57,22 +81,27 @@ echo ============================================
 
 pause
 
-echo ============================================
-echo   🩺 Miniproyecto Predicción de Diabetes
-echo ============================================
-
-REM 7. Entrenar el modelo
-echo.
-echo Entrenando el modelo predictivo...
+REM === 5. Entrenar el modelo ===
+echo [INFO] Entrenando el modelo predictivo de diabetes...
 cd src
 python train_model.py
-
-REM 8. Ejecutar el dashboard interactivo
-echo.
-echo Iniciando el dashboard con Streamlit...
-streamlit run dashboard.py
-
-REM 9. Volver a la carpeta raíz al cerrar Streamlit
+IF %ERRORLEVEL% NEQ 0 (
+    echo [ERROR] Error al entrenar el modelo.
+    cd ..
+    pause
+    exit /b 1
+)
 cd ..
+echo.
 
+REM === 5. Ejecutar el dashboard interactivo ===
+echo [INFO] Iniciando dashboard interactivo con Streamlit...
+cd src
+streamlit run dashboard.py
+IF %ERRORLEVEL% NEQ 0 (
+    echo [ERROR] Error al ejecutar el dashboard interactivo.
+    cd ..
+    pause
+    exit /b 1
+)cd ..
 pause
