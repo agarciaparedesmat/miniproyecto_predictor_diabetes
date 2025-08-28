@@ -1,0 +1,9 @@
+Mejoras futuras
+
+Implementar XGBoost y LightGBM.
+
+
+
+Desplegar el dashboard en Streamlit Cloud.
+
+Integrar datos clínicos reales de hospitales o APIs biomédicas.

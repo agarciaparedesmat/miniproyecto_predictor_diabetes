@@ -1,0 +1,98 @@
+[
+    {
+        "accuracy": 0.7207792207792207,
+        "roc_auc": 0.82,
+        "f1_score": 0.6194690265486725,
+        "best_threshold": 0.27399691939353943,
+        "best_params": {
+            "colsample_bytree": 1,
+            "gamma": 0.1,
+            "learning_rate": 0.03,
+            "max_depth": 5,
+            "n_estimators": 300,
+            "subsample": 0.8
+        }
+    },
+    {
+        "accuracy": 0.7792207792207793,
+        "roc_auc": 0.8327777777777777,
+        "f1_score": 0.711864406779661,
+        "best_params": {
+            "model": "randomforest",
+            "n_estimators": 411,
+            "max_depth": 12,
+            "min_samples_split": 2,
+            "min_samples_leaf": 1
+        },
+        "model_type": "randomforest"
+    },
+    {
+        "accuracy": 0.7662337662337663,
+        "roc_auc": 0.8372222222222222,
+        "f1_score": 0.7049180327868853,
+        "best_params": {
+            "model": "randomforest",
+            "n_estimators": 441,
+            "max_depth": 9,
+            "min_samples_split": 4,
+            "min_samples_leaf": 5
+        },
+        "model_type": "randomforest"
+    },
+    {
+        "accuracy": 0.7792207792207793,
+        "roc_auc": 0.7994444444444444,
+        "f1_score": 0.6666666666666666,
+        "best_threshold": 0.7109091533430566,
+        "best_params": {
+            "model": "randomforest",
+            "n_estimators": 521,
+            "max_depth": 7,
+            "min_samples_split": 9,
+            "min_samples_leaf": 1
+        },
+        "model_type": "stacking_ensemble"
+    },
+    {
+        "accuracy": 0.7597402597402597,
+        "roc_auc": 0.8138888888888889,
+        "f1_score": 0.704,
+        "best_threshold": 0.30214263539628633,
+        "best_params": {
+            "model": "randomforest",
+            "n_estimators": 719,
+            "max_depth": 7,
+            "min_samples_split": 10,
+            "min_samples_leaf": 5
+        },
+        "model_type": "stacking_ensemble"
+    },
+    {
+        "accuracy": 0.7402597402597403,
+        "roc_auc": 0.8148148148148149,
+        "f1_score": 0.6923076923076923,
+        "best_threshold": 0.19931409365069652,
+        "best_params": {
+            "model": "randomforest",
+            "n_estimators": 665,
+            "max_depth": 7,
+            "min_samples_split": 6,
+            "min_samples_leaf": 4
+        },
+        "model_type": "stacking_ensemble"
+    },
+    {
+        "accuracy": 0.7597402597402597,
+        "roc_auc": 0.8301851851851851,
+        "f1_score": 0.7131782945736435,
+        "best_threshold": 0.28630318720583336,
+        "best_params": {
+            "model": "randomforest",
+            "n_estimators": 810,
+            "max_depth": 7,
+            "min_samples_split": 7,
+            "min_samples_leaf": 4
+        },
+        "model_type": "stacking_ultra"
+    }
+]

@@ -10,7 +10,7 @@ echo Opción 1: Desde el explorador de Windows,
 echo navega a la carpeta raiz del proyecto miniproyecto_predictor_diabetesdel 
 echo y haz doble clic en:  run_miniproyecto_diabetes.bat
 echo
-echo Opción 2: Abre **VS Code**. 2. Abre la terminal integrada (**Ctrl + ñ**). 
+echo Opción 2: Abre **VS Code**. 2. Abre la terminal integrada **Ctrl + ñ**. 
 echo 3. Ejecuta el comando: .\run_miniproyecto_diabetes.bat
 
 
@@ -19,24 +19,25 @@ echo  🩺 Configuración del entorno Python 3.11
 echo ============================================
 
 REM === 1. Comprobar si existe el entorno virtual y crearlo si no existe ===
-IF NOT EXIST "venv" (
-    echo [INFO] No se detecta entorno virtual. Creando venv (entorno virtual) para la versión Python 3.11......
+IF EXIST "venv" (
+    echo [OK] Entorno virtual detectado.
+) ELSE (
+    echo [INFO] No se detecta entorno virtual.
+    echo Creando venv entorno virtual con Python 3.11...
     py -3.11 -m venv venv
     IF %ERRORLEVEL% NEQ 0 (
-        echo [ERROR] No se pudo crear el entorno virtual. Asegúrate de tener Python 3.11 instalado.
-        echo Comprobando versión de Python
-        python --version        
+        echo [ERROR] No se pudo crear el entorno virtual.
+        echo Comprobando versión de Python instalada:
+        py --version
         pause
-        exit /b 1
+        exit /b 1run_miniproyecto_diabetes.bat
     )
-) ELSE (
-    echo [OK] Entorno virtual detectado.
+    echo [OK] Entorno virtual creado correctamente.
 )
-echo.
 
 REM === 2. Cambiar la política de ejecución global (LocalMachine) 
 REM por si no estás ejecutando PowerShell como administrador
-echo Cambiar la política solo para tu usuario (RECOMENDADO)
+echo Cambiar la política solo para tu usuario RECOMENDADO
 echo No necesitas abrir PowerShell como administrador. 
 Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 
@@ -79,7 +80,6 @@ echo     ahora procederemos a entrenar el modelo y
 echo     lanzar el dashboard interactivo.
 echo ============================================
 
-pause
 
 REM === 5. Entrenar el modelo ===
 echo [INFO] Entrenando el modelo predictivo de diabetes...
@@ -97,11 +97,15 @@ echo.
 REM === 5. Ejecutar el dashboard interactivo ===
 echo [INFO] Iniciando dashboard interactivo con Streamlit...
 cd src
+
+REM Ejecutamos Streamlit en primer plano, dejamos que él abra navegador
 streamlit run dashboard.py
-IF %ERRORLEVEL% NEQ 0 (
-    echo [ERROR] Error al ejecutar el dashboard interactivo.
-    cd ..
-    pause
-    exit /b 1
-)cd ..
+
+cd ..
+
+echo.
+echo =====================================================
+echo ✅ Dashboard cerrado.
+echo =====================================================
+
 pause
